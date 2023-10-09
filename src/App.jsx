@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-    const [word, setWord] = useState("wordl");
+    const [word] = useState("wordl");
     const [board, setBoard] = useState(Array(6).fill(null));
     const [currentGuess, setCurrentGuess] = useState("");
     const [keyboard, setKeyboard] = useState([
@@ -44,17 +44,23 @@ function App() {
     ]);
     const [isGameOver, setIsGameOver] = useState(false);
     const [isSubmitted, setIsSubmitted] = useState(false);
+    const [won, setWon] = useState(false);
 
     function handleType(key) {
         if (key === "Enter") {
             if (currentGuess.length !== 5) return;
-            if (board.at(-1) !== null) setIsGameOver(true);
+            if (board.at(-2) !== null) {
+                setIsGameOver(true);
+            }
             setBoard((prev) => {
                 const newBoard = [...prev];
                 newBoard[newBoard.findIndex((r) => r === null)] = currentGuess;
                 return newBoard;
             });
-            if (word === currentGuess) setIsGameOver(true);
+            if (word === currentGuess) {
+                setIsGameOver(true);
+                setWon(true);
+            }
             setCurrentGuess("");
             setIsSubmitted(true);
 
@@ -77,15 +83,18 @@ function App() {
         function handleType(e) {
             if (isGameOver) return;
             if (e.key === "Enter") {
-                if (board.at(-1) !== null) setIsGameOver(true);
                 if (currentGuess.length !== 5) return;
+                if (board.at(-2) !== null) setIsGameOver(true);
                 setBoard((prev) => {
                     const newBoard = [...prev];
                     newBoard[newBoard.findIndex((r) => r === null)] =
                         currentGuess;
                     return newBoard;
                 });
-                if (word === currentGuess) setIsGameOver(true);
+                if (word === currentGuess) {
+                    setIsGameOver(true);
+                    setWon(true);
+                }
                 setCurrentGuess("");
                 setIsSubmitted(true);
                 return;
@@ -136,6 +145,8 @@ function App() {
         };
     }, [currentGuess, board, isGameOver, word]);
 
+    console.log(`${word}, ${currentGuess}`);
+
     return (
         <main className="w-full h-screen flex flex-col justify-center items-center gap-24">
             <h1 className="text-2xl font-bold">{word}</h1>
@@ -155,7 +166,7 @@ function App() {
                 })}
             </div>
             <div>
-                {!isGameOver &&
+                {!isGameOver ? (
                     keyboard.map((row, i) => {
                         return (
                             <div
@@ -181,7 +192,12 @@ function App() {
                                 ))}
                             </div>
                         );
-                    })}
+                    })
+                ) : won ? (
+                    <h1>YOU WON</h1>
+                ) : (
+                    <h1>YOU LOST</h1>
+                )}
             </div>
         </main>
     );
@@ -195,9 +211,9 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
         const char = row[i];
         if (!isCurrentGuess && row.length === 5 && isSubmitted) {
             let color;
-            if (char === word[i]) color = "green";
-            else if (word.includes(char) && char !== word[i]) color = "yellow";
-            else color = "gray";
+            if (char === word[i]) color = "lightgreen";
+            else if (word.includes(char) && char !== word[i]) color = "orange";
+            else color = "lightgray";
             tiles.push(
                 <div
                     key={i}
