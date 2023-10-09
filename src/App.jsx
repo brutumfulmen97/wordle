@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import "./App.css";
 
 function App() {
-    const [word] = useState("wordl");
+    const [word] = useState("hello");
     const [board, setBoard] = useState(Array(6).fill(null));
     const [currentGuess, setCurrentGuess] = useState("");
     const [keyboard, setKeyboard] = useState([
@@ -57,7 +57,7 @@ function App() {
                 newBoard[newBoard.findIndex((r) => r === null)] = currentGuess;
                 return newBoard;
             });
-            if (word === currentGuess) {
+            if (word === currentGuess.toLowerCase()) {
                 setIsGameOver(true);
                 setWon(true);
             }
@@ -91,7 +91,7 @@ function App() {
                         currentGuess;
                     return newBoard;
                 });
-                if (word === currentGuess) {
+                if (word === currentGuess.toLowerCase()) {
                     setIsGameOver(true);
                     setWon(true);
                 }
@@ -145,8 +145,6 @@ function App() {
         };
     }, [currentGuess, board, isGameOver, word]);
 
-    console.log(`${word}, ${currentGuess}`);
-
     return (
         <main className="w-full h-screen flex flex-col justify-center items-center gap-24">
             <h1 className="text-2xl font-bold">{word}</h1>
@@ -194,9 +192,13 @@ function App() {
                         );
                     })
                 ) : won ? (
-                    <h1>YOU WON</h1>
+                    <h1 className="text-4xl font-bold text-slate-200">
+                        YOU WON
+                    </h1>
                 ) : (
-                    <h1>YOU LOST</h1>
+                    <h1 className="text-4xl font-bold text-slate-200">
+                        YOU LOST
+                    </h1>
                 )}
             </div>
         </main>
@@ -211,25 +213,26 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
         const char = row[i];
         if (!isCurrentGuess && row.length === 5 && isSubmitted) {
             let color;
-            if (char === word[i]) color = "lightgreen";
-            else if (word.includes(char) && char !== word[i]) color = "orange";
+            if (char.toLowerCase() === word[i]) color = "lightgreen";
+            else if (word.includes(char.toLowerCase()) && char !== word[i])
+                color = "orange";
             else color = "lightgray";
             tiles.push(
                 <div
                     key={i}
-                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold "
+                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md"
                     style={{ backgroundColor: color }}
                 >
-                    {char}
+                    {char.toUpperCase()}
                 </div>
             );
         } else {
             tiles.push(
                 <div
                     key={i}
-                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold "
+                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md"
                 >
-                    {char}
+                    {char?.toUpperCase()}
                 </div>
             );
         }
