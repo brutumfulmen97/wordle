@@ -8,37 +8,193 @@ function App() {
     const [currentGuess, setCurrentGuess] = useState("");
     const [keyboard, setKeyboard] = useState([
         [
-            { key: "q", clicked: false, isIn: false, isNotIn: false },
-            { key: "w", clicked: false, isIn: false, isNotIn: false },
-            { key: "e", clicked: false, isIn: false, isNotIn: false },
-            { key: "r", clicked: false, isIn: false, isNotIn: false },
-            { key: "t", clicked: false, isIn: false, isNotIn: false },
-            { key: "y", clicked: false, isIn: false, isNotIn: false },
-            { key: "u", clicked: false, isIn: false, isNotIn: false },
-            { key: "i", clicked: false, isIn: false, isNotIn: false },
-            { key: "o", clicked: false, isIn: false, isNotIn: false },
-            { key: "p", clicked: false, isIn: false, isNotIn: false },
+            {
+                key: "q",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "w",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "e",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "r",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "t",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "y",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "u",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "i",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "o",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "p",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
         ],
         [
-            { key: "a", clicked: false, isIn: false, isNotIn: false },
-            { key: "s", clicked: false, isIn: false, isNotIn: false },
-            { key: "d", clicked: false, isIn: false, isNotIn: false },
-            { key: "f", clicked: false, isIn: false, isNotIn: false },
-            { key: "g", clicked: false, isIn: false, isNotIn: false },
-            { key: "h", clicked: false, isIn: false, isNotIn: false },
-            { key: "j", clicked: false, isIn: false, isNotIn: false },
-            { key: "k", clicked: false, isIn: false, isNotIn: false },
-            { key: "l", clicked: false, isIn: false, isNotIn: false },
+            {
+                key: "a",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "s",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "d",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "f",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "g",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "h",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "j",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "k",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "l",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
         ],
         [
             { key: "Enter", clicked: false },
-            { key: "z", clicked: false, isIn: false, isNotIn: false },
-            { key: "x", clicked: false, isIn: false, isNotIn: false },
-            { key: "c", clicked: false, isIn: false, isNotIn: false },
-            { key: "v", clicked: false, isIn: false, isNotIn: false },
-            { key: "b", clicked: false, isIn: false, isNotIn: false },
-            { key: "n", clicked: false, isIn: false, isNotIn: false },
-            { key: "m", clicked: false, isIn: false, isNotIn: false },
+            {
+                key: "z",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "x",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "c",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "v",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "b",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "n",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
+            {
+                key: "m",
+                clicked: false,
+                isIn: false,
+                isNotIn: false,
+                isCorrect: false,
+            },
             { key: "Backspace", clicked: false },
         ],
     ]);
@@ -61,8 +217,32 @@ function App() {
                 setIsGameOver(true);
                 setWon(true);
             }
-            setCurrentGuess("");
             setIsSubmitted(true);
+            setKeyboard((prev) => {
+                const newKeyboard = [...prev];
+                newKeyboard.forEach((row) => {
+                    row.map((k) => {
+                        if (k.key === "Enter") return k;
+                        if (k.key === "Backspace") return k;
+                        if (currentGuess.includes(k.key)) {
+                            if (
+                                word.indexOf(k.key) ===
+                                currentGuess.indexOf(k.key)
+                            ) {
+                                k.isCorrect = true;
+                            }
+                            if (word.includes(k.key)) {
+                                k.isIn = true;
+                            } else {
+                                k.isNotIn = true;
+                            }
+                            return k;
+                        }
+                    });
+                });
+                return newKeyboard;
+            });
+            setCurrentGuess("");
 
             return;
         }
@@ -103,6 +283,12 @@ function App() {
                             if (k.key === "Enter") return k;
                             if (k.key === "Backspace") return k;
                             if (currentGuess.includes(k.key)) {
+                                if (
+                                    word.indexOf(k.key) ===
+                                    currentGuess.indexOf(k.key)
+                                ) {
+                                    k.isCorrect = true;
+                                }
                                 if (word.includes(k.key)) {
                                     k.isIn = true;
                                 } else {
@@ -163,9 +349,26 @@ function App() {
         };
     }, [currentGuess, board, isGameOver, word]);
 
+    function getKeyColor(key) {
+        if (key.clicked === true) {
+            return "rgb(148 163 184)";
+        }
+        if (isSubmitted) {
+            if (key.isIn === true && !key.isCorrect) {
+                return "orange";
+            }
+            if (key.isCorrect === true) {
+                return "lightgreen";
+            }
+            if (key.isNotIn === true) {
+                return "darkgrey";
+            }
+        }
+    }
+
     return (
         <main className="w-full h-screen flex flex-col justify-center items-center gap-24">
-            <h1 className="text-2xl font-bold">{word}</h1>
+            <h1 className="text-2xl font-bold">WORDLE</h1>
             <div className="bg-transparent w-[500px] h-[600px] flex flex-col justify-between gap-4 p-4">
                 {board.map((row, i) => {
                     const isCurrentGuess =
@@ -194,25 +397,9 @@ function App() {
                                         key={keyI}
                                         className="p-4 bg-slate-200 mt-2 text-black text-center font-bold text-lg rounded-md cursor-pointer hover:bg-slate-400"
                                         onClick={() => handleType(key.key)}
-                                        style={
-                                            key.clicked === true
-                                                ? {
-                                                      backgroundColor:
-                                                          "rgb(148 163 184)",
-                                                  }
-                                                : key.isIn === true &&
-                                                  isSubmitted
-                                                ? {
-                                                      backgroundColor: "orange",
-                                                  }
-                                                : key.isNotIn === true &&
-                                                  isSubmitted
-                                                ? {
-                                                      backgroundColor:
-                                                          "darkgrey",
-                                                  }
-                                                : {}
-                                        }
+                                        style={{
+                                            backgroundColor: getKeyColor(key),
+                                        }}
                                     >
                                         {key.key}
                                     </div>
