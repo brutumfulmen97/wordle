@@ -2,8 +2,26 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
+const words = [
+    "hello",
+    "world",
+    "react",
+    "array",
+    "class",
+    "debug",
+    "float",
+    "index",
+    "regex",
+    "scope",
+    "stack",
+    "tuple",
+    "yield",
+];
+
+const randomWord = words[Math.floor(Math.random() * words.length)];
+
 function App() {
-    const [word] = useState("hello");
+    const [word] = useState(randomWord);
     const [board, setBoard] = useState(Array(6).fill(null));
     const [currentGuess, setCurrentGuess] = useState("");
     const [keyboard, setKeyboard] = useState([
