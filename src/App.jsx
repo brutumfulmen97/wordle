@@ -252,7 +252,7 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
             tiles.push(
                 <div
                     key={i}
-                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md"
+                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md transition-colors duration-500 animate-spin-slow "
                     style={{ backgroundColor: color }}
                 >
                     {char.toUpperCase()}
@@ -262,7 +262,7 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
             tiles.push(
                 <div
                     key={i}
-                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md"
+                    className="w-full h-full bg-white flex justify-center items-center text-2xl text-black font-bold rounded-md transition-colors duration-500"
                 >
                     {char?.toUpperCase()}
                 </div>
