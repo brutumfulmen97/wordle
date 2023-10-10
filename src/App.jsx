@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import "./App.css";
 import toast, { Toaster } from "react-hot-toast";
 
@@ -221,6 +221,8 @@ function App() {
     const [isSubmitted, setIsSubmitted] = useState(false);
     const [won, setWon] = useState(false);
 
+    const ref = useRef(null);
+
     async function handleType(key) {
         if (key === "Enter") {
             if (currentGuess.length !== 5) return;
@@ -233,6 +235,7 @@ function App() {
             const data = await res.json();
             if (data.title === "No Definitions Found") {
                 toast.error("Invalid Word");
+                ref.current.classList.add("animate-bounce-once");
                 return;
             }
             setBoard((prev) => {
@@ -296,6 +299,7 @@ function App() {
                 );
                 const data = await res.json();
                 if (data.title === "No Definitions Found") {
+                    ref.current.classList.add("animate-bounce-once");
                     toast.error("Invalid Word");
                     return;
                 }
@@ -418,6 +422,7 @@ function App() {
                             word={word}
                             isCurrentGuess={isCurrentGuess}
                             isSubmitted={isSubmitted}
+                            forwardRef={ref}
                         />
                     );
                 })}
@@ -461,7 +466,7 @@ function App() {
 
 export default App;
 
-function Line({ row, word, isCurrentGuess, isSubmitted }) {
+function Line({ row, word, isCurrentGuess, isSubmitted, forwardRef }) {
     let tiles = [];
     for (let i = 0; i < 5; i++) {
         const char = row[i];
@@ -495,9 +500,20 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
         }
     }
 
-    return (
-        <div className="flex w-full h-full justify-center items-center gap-4">
-            {tiles}
-        </div>
-    );
+    if (isCurrentGuess) {
+        return (
+            <div
+                ref={forwardRef}
+                className="flex w-full h-full justify-center items-center gap-4"
+            >
+                {tiles}
+            </div>
+        );
+    } else {
+        return (
+            <div className="flex w-full h-full justify-center items-center gap-4">
+                {tiles}
+            </div>
+        );
+    }
 }
