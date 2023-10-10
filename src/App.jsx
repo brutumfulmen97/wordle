@@ -8,37 +8,37 @@ function App() {
     const [currentGuess, setCurrentGuess] = useState("");
     const [keyboard, setKeyboard] = useState([
         [
-            { key: "q", clicked: false },
-            { key: "w", clicked: false },
-            { key: "e", clicked: false },
-            { key: "r", clicked: false },
-            { key: "t", clicked: false },
-            { key: "y", clicked: false },
-            { key: "u", clicked: false },
-            { key: "i", clicked: false },
-            { key: "o", clicked: false },
-            { key: "p", clicked: false },
+            { key: "q", clicked: false, isIn: false, isNotIn: false },
+            { key: "w", clicked: false, isIn: false, isNotIn: false },
+            { key: "e", clicked: false, isIn: false, isNotIn: false },
+            { key: "r", clicked: false, isIn: false, isNotIn: false },
+            { key: "t", clicked: false, isIn: false, isNotIn: false },
+            { key: "y", clicked: false, isIn: false, isNotIn: false },
+            { key: "u", clicked: false, isIn: false, isNotIn: false },
+            { key: "i", clicked: false, isIn: false, isNotIn: false },
+            { key: "o", clicked: false, isIn: false, isNotIn: false },
+            { key: "p", clicked: false, isIn: false, isNotIn: false },
         ],
         [
-            { key: "a", clicked: false },
-            { key: "s", clicked: false },
-            { key: "d", clicked: false },
-            { key: "f", clicked: false },
-            { key: "g", clicked: false },
-            { key: "h", clicked: false },
-            { key: "j", clicked: false },
-            { key: "k", clicked: false },
-            { key: "l", clicked: false },
+            { key: "a", clicked: false, isIn: false, isNotIn: false },
+            { key: "s", clicked: false, isIn: false, isNotIn: false },
+            { key: "d", clicked: false, isIn: false, isNotIn: false },
+            { key: "f", clicked: false, isIn: false, isNotIn: false },
+            { key: "g", clicked: false, isIn: false, isNotIn: false },
+            { key: "h", clicked: false, isIn: false, isNotIn: false },
+            { key: "j", clicked: false, isIn: false, isNotIn: false },
+            { key: "k", clicked: false, isIn: false, isNotIn: false },
+            { key: "l", clicked: false, isIn: false, isNotIn: false },
         ],
         [
             { key: "Enter", clicked: false },
-            { key: "z", clicked: false },
-            { key: "x", clicked: false },
-            { key: "c", clicked: false },
-            { key: "v", clicked: false },
-            { key: "b", clicked: false },
-            { key: "n", clicked: false },
-            { key: "m", clicked: false },
+            { key: "z", clicked: false, isIn: false, isNotIn: false },
+            { key: "x", clicked: false, isIn: false, isNotIn: false },
+            { key: "c", clicked: false, isIn: false, isNotIn: false },
+            { key: "v", clicked: false, isIn: false, isNotIn: false },
+            { key: "b", clicked: false, isIn: false, isNotIn: false },
+            { key: "n", clicked: false, isIn: false, isNotIn: false },
+            { key: "m", clicked: false, isIn: false, isNotIn: false },
             { key: "Backspace", clicked: false },
         ],
     ]);
@@ -95,8 +95,26 @@ function App() {
                     setIsGameOver(true);
                     setWon(true);
                 }
-                setCurrentGuess("");
                 setIsSubmitted(true);
+                setKeyboard((prev) => {
+                    const newKeyboard = [...prev];
+                    newKeyboard.forEach((row) => {
+                        row.map((k) => {
+                            if (k.key === "Enter") return k;
+                            if (k.key === "Backspace") return k;
+                            if (currentGuess.includes(k.key)) {
+                                if (word.includes(k.key)) {
+                                    k.isIn = true;
+                                } else {
+                                    k.isNotIn = true;
+                                }
+                                return k;
+                            }
+                        });
+                    });
+                    return newKeyboard;
+                });
+                setCurrentGuess("");
                 return;
             }
             if (e.key === "Backspace") {
@@ -182,6 +200,17 @@ function App() {
                                                       backgroundColor:
                                                           "rgb(148 163 184)",
                                                   }
+                                                : key.isIn === true &&
+                                                  isSubmitted
+                                                ? {
+                                                      backgroundColor: "orange",
+                                                  }
+                                                : key.isNotIn === true &&
+                                                  isSubmitted
+                                                ? {
+                                                      backgroundColor:
+                                                          "darkgrey",
+                                                  }
                                                 : {}
                                         }
                                     >
@@ -213,10 +242,13 @@ function Line({ row, word, isCurrentGuess, isSubmitted }) {
         const char = row[i];
         if (!isCurrentGuess && row.length === 5 && isSubmitted) {
             let color;
-            if (char.toLowerCase() === word[i]) color = "lightgreen";
-            else if (word.includes(char.toLowerCase()) && char !== word[i])
+            if (char.toLowerCase() === word[i]) {
+                color = "lightgreen";
+            } else if (word.includes(char.toLowerCase()) && char !== word[i]) {
                 color = "orange";
-            else color = "lightgray";
+            } else {
+                color = "lightgray";
+            }
             tiles.push(
                 <div
                     key={i}
