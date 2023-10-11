@@ -15,7 +15,7 @@ export default {
             },
             animation: {
                 "spin-slow": "spin 1s linear",
-                "bounce-once": "wiggle 1s linear",
+                "bounce-once": "wiggle 0.5s linear",
             },
         },
     },
