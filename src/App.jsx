@@ -238,7 +238,11 @@ function App() {
                 );
                 const data = await res.json();
                 if (data.title === "No Definitions Found") {
-                    toast.error("Invalid Word");
+                    toast.error("Invalid Word", {
+                        style: {
+                            zoom: 1.5,
+                        },
+                    });
                     ref.current.classList.add("animate-bounce-once");
                     return;
                 }
@@ -341,7 +345,7 @@ function App() {
     return (
         <main className="w-full h-screen flex flex-col justify-center items-center gap-24">
             <Toaster />
-            <h1 className="text-2xl font-bold">WORDLE</h1>
+            <h1 className="text-2xl font-bold">{word}</h1>
             <div className="bg-transparent w-[500px] h-[600px] flex flex-col justify-between gap-4 p-4">
                 {board.map((row, i) => {
                     const isCurrentGuess =
@@ -397,24 +401,35 @@ function App() {
 
 export default App;
 
+function getTileColor(word, char, i) {
+    let colors = Array(5).fill("black");
+
+    if (word[i] === char.toLowerCase()) colors[i] = "lightgreen";
+    if (!word.includes(char.toLowerCase())) colors[i] = "lightgray";
+    if (word.includes(char.toLowerCase()) && char !== word[i])
+        colors[i] = "orange";
+
+    return colors;
+}
+
 function Line({ row, word, isCurrentGuess, isSubmitted, forwardRef }) {
     let tiles = [];
     for (let i = 0; i < 5; i++) {
         const char = row[i];
         if (!isCurrentGuess && row.length === 5 && isSubmitted) {
-            let color;
-            if (char.toLowerCase() === word[i]) {
-                color = "lightgreen";
-            } else if (word.includes(char.toLowerCase()) && char !== word[i]) {
-                color = "orange";
-            } else {
-                color = "lightgray";
-            }
+            let colors = getTileColor(word, char, i);
+            // if (char.toLowerCase() === word[i]) {
+            //     color = "lightgreen";
+            // } else if (word.includes(char.toLowerCase()) && char !== word[i]) {
+            //     color = "orange";
+            // } else {
+            //     color = "lightgray";
+            // }
             tiles.push(
                 <div
                     key={i}
                     className="w-full h-full bg-slate-100 flex justify-center items-center text-2xl text-black font-bold rounded-md transition-colors duration-500 animate-spin-slow "
-                    style={{ backgroundColor: color }}
+                    style={{ backgroundColor: colors[i] }}
                 >
                     {char.toUpperCase()}
                 </div>
