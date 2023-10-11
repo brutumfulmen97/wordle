@@ -401,13 +401,37 @@ function App() {
 
 export default App;
 
-function getTileColor(word, char, i) {
-    let colors = Array(5).fill("black");
+function getTileColor(word, row) {
+    let colors = [Array(5).fill("lightgray")];
 
-    if (word[i] === char.toLowerCase()) colors[i] = "lightgreen";
-    if (!word.includes(char.toLowerCase())) colors[i] = "lightgray";
-    if (word.includes(char.toLowerCase()) && char !== word[i])
-        colors[i] = "orange";
+    // if (word[i] === char.toLowerCase()) colors[i] = "lightgreen";
+    // if (!word.includes(char.toLowerCase())) colors[i] = "lightgray";
+    // if (word.includes(char.toLowerCase()) && char !== word[i])
+    //     colors[i] = "orange";
+    const guess = row.toLowerCase();
+    const unmatchedWordChars = new Set();
+
+    // First, mark green for correct letters in the correct position
+    for (let i = 0; i < word.length; i++) {
+        if (word[i] === guess[i]) {
+            colors[i] = "lightgreen";
+        } else {
+            unmatchedWordChars.add(word[i]);
+        }
+    }
+
+    // Then, mark yellow for correct letters in the wrong position
+    for (let i = 0; i < guess.length; i++) {
+        if (
+            (word[i] !== guess[i] && unmatchedWordChars.has(guess[i])) ||
+            word.match(new RegExp(guess[i], "g"))?.length > 1
+        ) {
+            colors[i] = "orange";
+            unmatchedWordChars.delete(guess[i]);
+        }
+    }
+
+    // Fill in the rest with gray (incorrect letters)
 
     return colors;
 }
@@ -417,7 +441,7 @@ function Line({ row, word, isCurrentGuess, isSubmitted, forwardRef }) {
     for (let i = 0; i < 5; i++) {
         const char = row[i];
         if (!isCurrentGuess && row.length === 5 && isSubmitted) {
-            let colors = getTileColor(word, char, i);
+            let colors = getTileColor(word, row);
             // if (char.toLowerCase() === word[i]) {
             //     color = "lightgreen";
             // } else if (word.includes(char.toLowerCase()) && char !== word[i]) {
